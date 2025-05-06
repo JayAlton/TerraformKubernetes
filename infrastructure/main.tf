@@ -1,12 +1,12 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/20"
+  cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "subnet_1" {
     vpc_id = aws_vpc.main.id
     cidr_block = "10.0.0.0/20"
-    availability_zone = "us-west-1b"
+    availability_zone = "us-west-1a"
     map_public_ip_on_launch = true
 }
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "subnet_2" {
 resource "aws_subnet" "subnet_3" {
   vpc_id = aws_vpc.main.id
   cidr_block = "10.0.32.0/20"
-  availability_zone = "us-west-1d"
+  availability_zone = "us-west-1c"
   map_public_ip_on_launch = true
 }
 
@@ -34,11 +34,6 @@ resource "aws_route_table" "route_table" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.internet_gw.id
-  }
-
-  route {
-    cidr_block = "10.0.0.0/16"
-    gateway_id = "local"
   }
 }
 
